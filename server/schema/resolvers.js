@@ -26,6 +26,21 @@ const resolvers = {
 
     return { token, user };
   },
+
+    login: async (parent, {  email, password }) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Can't find this user" });
+    }
+
+    const correctPw = await user.isCorrectPassword(password);
+
+    if (!correctPw) {
+      return res.status(400).json({ message: 'Wrong password!' });
+    }
+    const token = signToken(user);
+    res.json({ token, user });
+  },
 },
 };
 
