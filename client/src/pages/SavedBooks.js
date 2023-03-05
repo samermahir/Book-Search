@@ -69,21 +69,23 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
-  return (
+  return loading ? (
+    <h2>LOADING...</h2>
+  ) : (
     <>
-      <div fluid className='text-light p-4 bg-dark'>
+    <div fluid className='text-light p-4 bg-dark'>
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
       </div>
       <Container>
         <h2>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
+          {data.savedBooks.length
+            ? `Viewing ${data.length} saved ${data.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
         </h2>
         <div>
-          {userData.savedBooks.map((book) => {
+          {data.savedBooks.map((book) => {
             return (
               <Card key={book.bookId} border='dark'>
                 {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
@@ -101,6 +103,7 @@ const SavedBooks = () => {
         </div>
       </Container>
     </>
+      
   );
 };
 
