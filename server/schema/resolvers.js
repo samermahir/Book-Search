@@ -2,12 +2,16 @@ const { Thought } = require('../models');
 
 const resolvers = {
   Query: {
-    thoughts: async () => {
-      return Thought.find().sort({ createdAt: -1 });
-    },
-
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
+    me: async (parent, { id, username }) => {
+        const foundUser = await User.findOne({
+            $or: [{ _id: id },
+                 { username }],
+          });
+      
+          if (!foundUser) {
+            return res.status(400).json({ message: 'Cannot find a user with this id!' });
+          }
+      return foundUser;
     },
   },
 
