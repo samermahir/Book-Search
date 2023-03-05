@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -41,7 +42,32 @@ const resolvers = {
     const token = signToken(user);
     res.json({ token, user });
   },
+
+  saveBook: async(parent, {bookData }, context) => {
+    
+    if (context.user) {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { savedBooks: bookData } },
+        { new: true }
+      );
+      return updatedUser;
+  }
+  return res.status(400).json({ message: 'book not saved' });
 },
+
+deleteBook: async (parent, {bookId}, context) => {
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: context.user._id },
+    { $pull: { savedBooks: { bookId } } },
+    { new: true }
+  );
+  if (!updatedUser) {
+    return res.status(404).json({ message: "Couldn't find user with this id!" });
+  }
+  return res.json(updatedUser);
+},
+  },
 };
 
 module.exports = resolvers;
