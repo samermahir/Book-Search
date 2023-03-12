@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
+import { Jumbotron, Container, Col, Form, Button, Card,  } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
 import { saveBook, searchGoogleBooks } from '../utils/API';
@@ -79,12 +79,12 @@ const SearchBooks = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className='text-light p-4 bg-dark'>
+    <>
+      <Jumbotron className='text-light p-4 bg-dark'>
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Row>
+            <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
                   name='searchInput'
@@ -100,10 +100,10 @@ const SearchBooks = () => {
                   Submit Search
                 </Button>
               </Col>
-            </Row>
+            </Form.Row>
           </Form>
         </Container>
-      </div>
+      </Jumbotron>
 
       <Container>
         <h2>
@@ -138,7 +138,7 @@ const SearchBooks = () => {
           })}
         </div>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 
