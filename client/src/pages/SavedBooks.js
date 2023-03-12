@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Card, Button } from 'react-bootstrap';
 
 import { REMOVE_BOOK } from '../utils/mutations';
